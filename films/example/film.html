@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Example Film</title>
+  <style>
+    body { margin: 0; background: #0a0a0a; display: flex; align-items: center; justify-content: center; height: 100vh; }
+    canvas { background: #111; }
+  </style>
+</head>
+<body>
+  <canvas id="c" width="960" height="540"></canvas>
+  <script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+    window.duration = 8;
+
+    window.renderOut = function(t) {
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, 960, 540);
+
+      // Animated circle
+      const x = 200 + Math.sin(t * 2) * 150;
+      const y = 270 + Math.cos(t * 1.5) * 80;
+      ctx.fillStyle = '#ff6b00';
+      ctx.beginPath();
+      ctx.arc(x, y, 60, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Title text
+      ctx.fillStyle = 'white';
+      ctx.font = 'bold 48px system-ui';
+      ctx.textAlign = 'center';
+      ctx.fillText('Simple VideoHub Demo', 480, 120);
+
+      ctx.font = '24px system-ui';
+      ctx.fillStyle = '#aaa';
+      ctx.fillText('Time: ' + t.toFixed(2) + 's', 480, 420);
+
+      // Subtitle that changes
+      const sub = t < 3 ? 'Click me and leave a note' : t < 6 ? 'Claude will fix the code' : 'Then render once';
+      ctx.fillStyle = '#ffcc00';
+      ctx.font = '28px system-ui';
+      ctx.fillText(sub, 480, 480);
+    };
+
+    window.READY = true;
+    window.renderOut(0);
+  </script>
+</body>
+</html>
